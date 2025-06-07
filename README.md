@@ -1,4 +1,4 @@
-# Software Developer Portfolio
+# Portfolio
 
 A modern, interactive portfolio website showcasing developer skills, projects, and philosophy through elegant animations and professional design.
 
