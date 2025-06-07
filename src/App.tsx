@@ -10,7 +10,7 @@ import { NavigationPanel } from './components/NavigationPanel';
 function App() {
   return (
     <div className="bg-black text-white overflow-x-hidden">
-      <NavigationPanel />
+     <NavigationPanel />
       <HeroSection />
       <IntroSection />
       <CraftSection />

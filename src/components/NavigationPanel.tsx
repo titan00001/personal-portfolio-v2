@@ -7,12 +7,11 @@ import {
   Zap, 
   Search,
   Filter,
-  Calendar,
-  CheckCircle,
-  Clock,
+  Clock2,
   Target,
   Lightbulb,
-  Bookmark
+  Menu,
+  X,
 } from 'lucide-react';
 
 interface Project {
@@ -318,7 +317,7 @@ const ExplorationItem: React.FC<{ topic: ExplorationTopic; isExpanded: boolean; 
           </p>
           {topic.progress && (
             <div className="flex items-center space-x-2 text-xs">
-              <Clock size={10} className="text-blue-400" />
+              <Clock2 size={10} className="text-blue-400" />
               <span className="text-blue-300">{topic.progress}</span>
             </div>
           )}
@@ -328,7 +327,12 @@ const ExplorationItem: React.FC<{ topic: ExplorationTopic; isExpanded: boolean; 
   );
 };
 
+type SortByType = 'date' | 'category' | 'status';
+
 export const NavigationPanel: React.FC = () => {
+  const [isPanelMounted, setIsPanelMounted] = useState(false);
+  const [isPanelOpen, setIsPanelOpen] = useState(false);
+  
   const [currentTime, setCurrentTime] = useState(new Date());
   const [expandedSections, setExpandedSections] = useState<{[key: string]: boolean}>({
     projects: false,
@@ -337,12 +341,34 @@ export const NavigationPanel: React.FC = () => {
   });
   const [expandedItems, setExpandedItems] = useState<{[key: string]: boolean}>({});
   const [searchTerm, setSearchTerm] = useState('');
-  const [sortBy, setSortBy] = useState<'date' | 'category' | 'status'>('date');
+  const [sortBy, setSortBy] = useState<SortByType>('date');
 
   useEffect(() => {
+    if (isPanelMounted) {
+      const timer = setTimeout(() => setIsPanelOpen(true), 10);
+      return () => clearTimeout(timer);
+    }
+  }, [isPanelMounted]);
+
+  useEffect(() => {
+    if (!isPanelOpen) return;
     const timer = setInterval(() => setCurrentTime(new Date()), 1000);
     return () => clearInterval(timer);
-  }, []);
+  }, [isPanelOpen]);
+
+  const openPanel = () => {
+    setIsPanelMounted(true);
+  };
+
+  const closePanel = () => {
+    setIsPanelOpen(false);
+  };
+
+  const handleTransitionEnd = () => {
+    if (!isPanelOpen) {
+      setIsPanelMounted(false);
+    }
+  };
 
   const toggleSection = (section: string) => {
     setExpandedSections(prev => ({
@@ -378,105 +404,134 @@ export const NavigationPanel: React.FC = () => {
     });
 
   return (
-    <div className="fixed top-6 right-6 z-50 bg-gray-900/95 backdrop-blur-sm border border-gray-700/50 rounded-lg w-80 max-h-[calc(100vh-3rem)] overflow-hidden hidden lg:block">
-      {/* Header */}
-      <div className="p-4 border-b border-gray-700/50">
-        <div className="flex items-center justify-between mb-3">
-          <h3 className="text-white font-semibold">Navigation</h3>
-          <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
-        </div>
-        
-        <div className="text-xs text-gray-400">
-          Local time: {currentTime.toLocaleTimeString()}
-        </div>
-      </div>
+    <>
+      <button
+        onClick={openPanel}
+        className={`fixed top-6 right-6 z-40 p-3 bg-gray-900/80 backdrop-blur-sm border border-gray-700/50 rounded-full text-white hover:bg-gray-800/90 transition-all duration-300 ease-in-out shadow-lg hover:shadow-blue-500/30 ${
+          isPanelMounted ? 'opacity-0 scale-95 pointer-events-none' : 'opacity-100 scale-100'
+        }`}
+        aria-label="Open navigation panel"
+        disabled={isPanelMounted}
+      >
+        <Menu size={20} />
+      </button>
 
-      {/* Scrollable Content */}
-      <div className="overflow-y-auto max-h-[calc(100vh-8rem)]">
-        {/* Projects Section */}
-        <CollapsibleSection
-          title="Projects"
-          icon={<Code size={16} className="text-blue-400" />}
-          isExpanded={expandedSections.projects}
-          onToggle={() => toggleSection('projects')}
+      {isPanelMounted && (
+        <div
+          onTransitionEnd={handleTransitionEnd}
+          className={`fixed top-6 right-6 z-50 bg-gray-900/95 backdrop-blur-sm border border-gray-700/50 rounded-lg w-80 max-h-[calc(100vh-3rem)] overflow-hidden flex flex-col transition-all duration-300 ease-in-out transform ${
+            isPanelOpen ? 'opacity-100 scale-100' : 'opacity-0 scale-95'
+          }`}
         >
-          <div className="space-y-1">
-            {projects.map(project => (
-              <ProjectItem
-                key={project.id}
-                project={project}
-                isExpanded={expandedItems[`project-${project.id}`] || false}
-                onToggle={() => toggleItem(`project-${project.id}`)}
-              />
-            ))}
-          </div>
-        </CollapsibleSection>
-
-        {/* Reading List Section */}
-        <CollapsibleSection
-          title="Reading List"
-          icon={<Book size={16} className="text-pink-400" />}
-          isExpanded={expandedSections.reading}
-          onToggle={() => toggleSection('reading')}
-        >
-          {/* Search and Sort Controls */}
-          <div className="mb-4 space-y-2">
-            <div className="relative">
-              <Search size={14} className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
-              <input
-                type="text"
-                placeholder="Search books..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full pl-9 pr-3 py-2 bg-gray-800/50 border border-gray-600/30 rounded-lg text-white text-xs placeholder-gray-400 focus:border-blue-400/50 focus:outline-none"
-              />
+          {/* Header */}
+          <div className="p-4 border-b border-gray-700/50">
+            <div className="flex items-center justify-between mb-3">
+              <h3 className="text-white font-semibold">Navigation</h3>
+              <div className="flex items-center space-x-2">
+                <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+                <button 
+                  onClick={closePanel}
+                  className="text-gray-400 hover:text-white transition-colors"
+                  aria-label="Close navigation panel"
+                >
+                  <X size={18} />
+                </button>
+              </div>
             </div>
             
-            <div className="flex items-center space-x-2">
-              <Filter size={12} className="text-gray-400" />
-              <select
-                value={sortBy}
-                onChange={(e) => setSortBy(e.target.value as any)}
-                className="flex-1 px-2 py-1 bg-gray-800/50 border border-gray-600/30 rounded text-white text-xs focus:border-blue-400/50 focus:outline-none"
-              >
-                <option value="date">Sort by Date</option>
-                <option value="category">Sort by Category</option>
-                <option value="status">Sort by Status</option>
-              </select>
+            <div className="text-xs text-gray-400">
+              Local time: {currentTime.toLocaleTimeString()}
             </div>
           </div>
 
-          <div className="space-y-1">
-            {filteredReadingList.map(item => (
-              <ReadingItem
-                key={item.id}
-                item={item}
-                isExpanded={expandedItems[`reading-${item.id}`] || false}
-                onToggle={() => toggleItem(`reading-${item.id}`)}
-              />
-            ))}
-          </div>
-        </CollapsibleSection>
+          {/* Scrollable Content */}
+          <div className="overflow-y-auto max-h-[calc(100vh-8rem)]">
+            {/* Projects Section */}
+            <CollapsibleSection
+              title="Projects"
+              icon={<Code size={16} className="text-blue-400" />}
+              isExpanded={expandedSections.projects}
+              onToggle={() => toggleSection('projects')}
+            >
+              <div className="space-y-1">
+                {projects.map(project => (
+                  <ProjectItem
+                    key={project.id}
+                    project={project}
+                    isExpanded={expandedItems[`project-${project.id}`] || false}
+                    onToggle={() => toggleItem(`project-${project.id}`)}
+                  />
+                ))}
+              </div>
+            </CollapsibleSection>
 
-        {/* Exploration Section */}
-        <CollapsibleSection
-          title="Exploration"
-          icon={<Zap size={16} className="text-yellow-400" />}
-          isExpanded={expandedSections.exploration}
-          onToggle={() => toggleSection('exploration')}
-        >
-          <div className="space-y-1">
-            {explorationTopics.map(topic => (
-              <ExplorationItem
-                key={topic.id}
-                topic={topic}
-                isExpanded={expandedItems[`exploration-${topic.id}`] || false}
-                onToggle={() => toggleItem(`exploration-${topic.id}`)}
-              />
-            ))}
+            {/* Reading List Section */}
+            <CollapsibleSection
+              title="Reading List"
+              icon={<Book size={16} className="text-pink-400" />}
+              isExpanded={expandedSections.reading}
+              onToggle={() => toggleSection('reading')}
+            >
+              {/* Search and Sort Controls */}
+              <div className="mb-4 space-y-2">
+                <div className="relative">
+                  <Search size={14} className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+                  <input
+                    type="text"
+                    placeholder="Search books..."
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    className="w-full pl-9 pr-3 py-2 bg-gray-800/50 border border-gray-600/30 rounded-lg text-white text-xs placeholder-gray-400 focus:border-blue-400/50 focus:outline-none"
+                  />
+                </div>
+                
+                <div className="flex items-center space-x-2">
+                  <Filter size={12} className="text-gray-400" />
+                  <select
+                    value={sortBy}
+                    onChange={(e) => setSortBy(e.target.value as SortByType)}
+                    className="flex-1 px-2 py-1 bg-gray-800/50 border border-gray-600/30 rounded text-white text-xs focus:border-blue-400/50 focus:outline-none"
+                  >
+                    <option value="date">Sort by Date</option>
+                    <option value="category">Sort by Category</option>
+                    <option value="status">Sort by Status</option>
+                  </select>
+                </div>
+              </div>
+
+              <div className="space-y-1">
+                {filteredReadingList.map(item => (
+                  <ReadingItem
+                    key={item.id}
+                    item={item}
+                    isExpanded={expandedItems[`reading-${item.id}`] || false}
+                    onToggle={() => toggleItem(`reading-${item.id}`)}
+                  />
+                ))}
+              </div>
+            </CollapsibleSection>
+
+            {/* Exploration Section */}
+            <CollapsibleSection
+              title="Exploration"
+              icon={<Zap size={16} className="text-yellow-400" />}
+              isExpanded={expandedSections.exploration}
+              onToggle={() => toggleSection('exploration')}
+            >
+              <div className="space-y-1">
+                {explorationTopics.map(topic => (
+                  <ExplorationItem
+                    key={topic.id}
+                    topic={topic}
+                    isExpanded={expandedItems[`exploration-${topic.id}`] || false}
+                    onToggle={() => toggleItem(`exploration-${topic.id}`)}
+                  />
+                ))}
+              </div>
+            </CollapsibleSection>
           </div>
-        </CollapsibleSection>
-      </div>
-    </div>
+        </div>
+      )}
+    </>
   );
 };
