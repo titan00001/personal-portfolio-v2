@@ -5,11 +5,34 @@ export const HeroSection: React.FC = () => {
   const [step, setStep] = useState(0);
 
   const handleFirstComplete = () => {
-    setTimeout(() => setStep(1), 500);
+    setTimeout(() => {
+      setStep(1);
+
+    }, 2000);
   };
 
   const handleSecondComplete = () => {
-    setTimeout(() => setStep(2), 300);
+    setTimeout(() => {
+      setStep(2);
+    }, 2000);
+  };
+
+  const handleStep3Complete = () => {
+    setTimeout(() => {
+      setStep(3);
+    }, 1000);
+  };
+
+  const handleStep4Complete = () => {
+    setTimeout(() => {
+      setStep(4);
+    }, 1000);
+  };
+
+  const handleStep5Complete = () => {
+    setTimeout(() => {
+      setStep(5);
+    }, 1000);
   };
 
   return (
@@ -38,24 +61,41 @@ export const HeroSection: React.FC = () => {
                 speed={40}
                 onComplete={handleSecondComplete}
               />
-              {step >= 2 && (
-                <div className="ml-8 mt-2 space-y-1">
+              <div className="ml-8 mt-2">
+                {step >= 2 && (
                   <div className="text-blue-400">
-                    <TypingAnimation text="const you = getInspired();\" speed={30} />
+                    <TypingAnimation 
+                      text="const you = getInspired();"
+                      speed={30}
+                      onComplete={handleStep3Complete}
+                    />
                   </div>
+                )}
+                {step >= 3 && (
                   <div className="text-pink-400">
-                    <TypingAnimation text="explore(you);" speed={30} />
+                    <TypingAnimation 
+                      text="explore(you);"
+                      speed={30}
+                      onComplete={handleStep4Complete}
+                    />
                   </div>
+                )}
+                
+              </div>
+              {step >= 4 && (
                   <div className="text-green-400">
-                    <TypingAnimation text="}" speed={30} />
+                    <TypingAnimation 
+                      text="}"
+                      speed={30}
+                      onComplete={handleStep5Complete}
+                    />
                   </div>
-                </div>
-              )}
+                )}
             </div>
           )}
         </div>
         
-        {step >= 2 && (
+        {step >= 5 && (
           <div className="mt-16 animate-fade-in">
             <div className="w-1 h-16 bg-gradient-to-b from-transparent via-white to-transparent mx-auto animate-bounce"></div>
             <p className="text-white/60 text-sm mt-4">Scroll to explore</p>
