@@ -7,5 +7,5 @@ export default defineConfig({
   optimizeDeps: {
     exclude: ['lucide-react'],
   },
-  base: '/personal-portfolio-v/2/',
+  base: '/personal-portfolio-v2/',
 });
