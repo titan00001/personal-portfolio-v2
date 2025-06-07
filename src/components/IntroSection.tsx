@@ -1,5 +1,6 @@
 import React from 'react';
 import { ScrollReveal } from './ScrollReveal';
+import { introContent } from '../data/intro';
 
 export const IntroSection: React.FC = () => {
   return (
@@ -8,14 +9,15 @@ export const IntroSection: React.FC = () => {
         <ScrollReveal>
           <div className="text-center">
             <h1 className="text-4xl md:text-6xl font-bold text-white mb-8 leading-tight">
-              Hi, I'm{' '}
+              {introContent.greeting}{' '}
               <span className="bg-gradient-to-r from-blue-400 to-pink-400 bg-clip-text text-transparent">
-                Alex Chen
+                {introContent.name}
               </span>
             </h1>
             <p className="text-xl md:text-2xl text-gray-300 mb-12 leading-relaxed">
-              A software engineer crafting{' '}
-              <span className="text-blue-400 font-semibold">human-first</span> tech
+              {introContent.title}{' '}
+              <span className="text-blue-400 font-semibold">{introContent.adjective}</span>{' '}
+              {introContent.noun}
             </p>
             
             {/* Floating sphere animation */}

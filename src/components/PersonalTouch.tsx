@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { ScrollReveal } from './ScrollReveal';
+import { personalTouchContent } from '../data/personalTouch';
 
 const InsightCard: React.FC<{
   title: string;
@@ -31,37 +32,22 @@ const InsightCard: React.FC<{
 export const PersonalTouch: React.FC = () => {
   const [activeCard, setActiveCard] = useState<number | null>(null);
 
-  const insights = [
-    {
-      title: "How I Think",
-      content: "I believe the best code is written for humans first, computers second. Every function should tell a story, every variable should have purpose."
-    },
-    {
-      title: "How I Code",
-      content: "Red-green-refactor. Test-driven development isn't just a practice—it's a philosophy. I write code that works today and adapts tomorrow."
-    },
-    {
-      title: "How I Collaborate",
-      content: "Great software is a team sport. I believe in clear communication, thoughtful code reviews, and sharing knowledge that lifts everyone up."
-    }
-  ];
-
   return (
     <section className="py-20">
       <div className="max-w-6xl mx-auto px-6">
         <ScrollReveal>
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
-              Not a Resume
+              {personalTouchContent.title}
             </h2>
             <p className="text-gray-400 text-lg">
-              A glimpse into the philosophy behind the code
+              {personalTouchContent.subtitle}
             </p>
           </div>
         </ScrollReveal>
         
         <div className="grid md:grid-cols-3 gap-6">
-          {insights.map((insight, index) => (
+          {personalTouchContent.insights.map((insight, index) => (
             <ScrollReveal key={index} delay={index * 200}>
               <InsightCard
                 title={insight.title}

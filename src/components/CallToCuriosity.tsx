@@ -1,17 +1,18 @@
 import React, { useState } from 'react';
 import { ScrollReveal } from './ScrollReveal';
 import { Copy, Check } from 'lucide-react';
+import { callToCuriosityContent } from '../data/callToCuriosity';
 
 export const CallToCuriosity: React.FC = () => {
   const [copied, setCopied] = useState(false);
-  const email = "alex@chen.dev";
+  const email = callToCuriosityContent.email;
 
   const copyEmail = async () => {
     try {
       await navigator.clipboard.writeText(email);
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
-    } catch (err) {
+    } catch {
       // Fallback for older browsers
       window.location.href = `mailto:${email}`;
     }
@@ -22,15 +23,15 @@ export const CallToCuriosity: React.FC = () => {
       <div className="max-w-4xl mx-auto px-6 text-center">
         <ScrollReveal>
           <h2 className="text-3xl md:text-5xl font-bold text-white mb-8 leading-tight">
-            Want to build something that{' '}
+            {callToCuriosityContent.title.split(' ').slice(0, 5).join(' ')}{' '}
             <span className="bg-gradient-to-r from-blue-400 to-pink-400 bg-clip-text text-transparent">
-              matters
+              {callToCuriosityContent.title.split(' ').slice(5).join(' ')}
             </span>
             ?
           </h2>
           
           <p className="text-xl text-gray-300 mb-12">
-            Let's talk — great ideas deserve great execution.
+            {callToCuriosityContent.subtitle}
           </p>
           
           <button
@@ -47,14 +48,14 @@ export const CallToCuriosity: React.FC = () => {
           
           {copied && (
             <p className="text-green-400 mt-4 animate-fade-in">
-              Email copied to clipboard!
+              {callToCuriosityContent.copied}
             </p>
           )}
         </ScrollReveal>
         
         <ScrollReveal delay={500}>
           <div className="mt-20 text-center">
-            <p className="text-gray-500 text-sm mb-4">Still scrolling?</p>
+            <p className="text-gray-500 text-sm mb-4">{callToCuriosityContent.stillScrolling}</p>
             <div className="w-px h-16 bg-gradient-to-b from-gray-500 to-transparent mx-auto"></div>
           </div>
         </ScrollReveal>

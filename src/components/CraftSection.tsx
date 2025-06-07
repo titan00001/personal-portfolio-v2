@@ -1,6 +1,9 @@
 import React, { useRef } from 'react';
 import { ScrollReveal } from './ScrollReveal';
 import { Code, Palette, Brain } from 'lucide-react';
+import { craftContent } from '../data/craft';
+
+const icons = [<Code size={32} />, <Palette size={32} />, <Brain size={32} />];
 
 const CraftCard: React.FC<{
   icon: React.ReactNode;
@@ -28,10 +31,10 @@ export const CraftSection: React.FC = () => {
       <div className="max-w-7xl mx-auto px-6">
         <ScrollReveal>
           <h2 className="text-3xl md:text-4xl font-bold text-center text-white mb-4">
-            Craft <span className="text-blue-400">&gt;</span> Code
+            {craftContent.title}
           </h2>
           <p className="text-gray-400 text-center mb-16 text-lg">
-            Three pillars of creating meaningful software
+            {craftContent.subtitle}
           </p>
         </ScrollReveal>
         
@@ -40,44 +43,37 @@ export const CraftSection: React.FC = () => {
           className="flex overflow-x-auto scrollbar-hide pb-8 snap-x snap-mandatory"
           style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
         >
-          <CraftCard
-            icon={<Code size={32} />}
-            title="Build"
-            description="Turning ideas into living, breathing applications"
-            animation={
+          {craftContent.pillars.map((pillar, index) => {
+            const animation = index === 0 ? (
               <div className="space-y-2 w-full">
                 <div className="h-2 bg-gray-600 rounded animate-pulse"></div>
                 <div className="h-2 bg-blue-500 rounded animate-pulse delay-100"></div>
                 <div className="h-2 bg-pink-500 rounded animate-pulse delay-200"></div>
                 <div className="h-2 bg-gray-600 rounded animate-pulse delay-300"></div>
               </div>
-            }
-          />
-          
-          <CraftCard
-            icon={<Palette size={32} />}
-            title="Design"
-            description="Crafting experiences that feel intuitive and delightful"
-            animation={
+            ) : index === 1 ? (
               <div className="relative w-24 h-24 mx-auto">
                 <div className="absolute inset-0 border-2 border-dashed border-gray-600 rounded animate-spin-slow"></div>
                 <div className="absolute inset-2 bg-gradient-to-br from-blue-500 to-pink-500 rounded opacity-60 animate-pulse"></div>
               </div>
-            }
-          />
-          
-          <CraftCard
-            icon={<Brain size={32} />}
-            title="Think"
-            description="Solving complex problems with elegant solutions"
-            animation={
+            ) : (
               <div className="font-mono text-xs text-green-400 space-y-1">
                 <div className="animate-fade-in">🤔 Challenge received...</div>
                 <div className="animate-fade-in delay-500">🧠 Thinking...</div>
                 <div className="animate-fade-in delay-1000">✅ Prototype created.</div>
               </div>
-            }
-          />
+            );
+
+            return (
+              <CraftCard
+                key={pillar.title}
+                icon={icons[index]}
+                title={pillar.title}
+                description={pillar.description}
+                animation={animation}
+              />
+            );
+          })}
         </div>
       </div>
     </section>

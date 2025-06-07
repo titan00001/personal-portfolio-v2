@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { ExternalLink, Github, Code, Users, Clock, Bug, Zap } from 'lucide-react';
+import { ExternalLink, Github, Code, Clock, Bug, Zap } from 'lucide-react';
 
 interface ProjectStats {
   linesOfCode: number;
@@ -205,7 +205,7 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project, onOpenModal }
             <span className="text-xs">Time</span>
           </div>
           <div className="text-white font-mono text-sm">
-            {project.stats.timeTouild}
+            {project.stats.timeToBuild}
           </div>
         </div>
         

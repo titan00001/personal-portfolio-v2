@@ -1,31 +1,6 @@
 import React from 'react';
-import { X, Github, ExternalLink, Code, Users, Clock, Bug } from 'lucide-react';
-
-interface Project {
-  id: string;
-  title: string;
-  techStack: string[];
-  synopsis: string;
-  challenge: string;
-  stats: {
-    linesOfCode: number;
-    features: number;
-    timeTouild: string;
-    usersImpacted?: number;
-    bugsSquashed: number;
-  };
-  previewType: 'video' | 'terminal' | 'image';
-  previewContent: string;
-  liveUrl?: string;
-  githubUrl?: string;
-  category: 'frontend' | 'backend' | 'fullstack';
-  status: 'completed' | 'in-progress';
-  detailedDescription?: string;
-  problem?: string;
-  approach?: string;
-  challenges?: string;
-  outcome?: string;
-}
+import { X, Github, ExternalLink, Code, Clock, Bug } from 'lucide-react';
+import { WorkshopProject as Project } from '../types';
 
 interface ProjectModalProps {
   project: Project | null;
@@ -99,7 +74,7 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, isOpen, onC
             
             <div className="bg-gray-800/50 rounded-lg p-4 text-center">
               <Clock size={24} className="text-purple-400 mx-auto mb-2" />
-              <div className="text-white font-mono text-lg">{project.stats.timeTouild}</div>
+              <div className="text-white font-mono text-lg">{project.stats.timeToBuild}</div>
               <div className="text-gray-400 text-sm">Build Time</div>
             </div>
             
