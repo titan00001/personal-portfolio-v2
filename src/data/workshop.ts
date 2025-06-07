@@ -1,75 +1,106 @@
-import { WorkshopProject } from '../types';
+import { WorkshopProject } from "../types";
 
 export const sampleProjects: WorkshopProject[] = [
   {
-    id: '1',
-    title: 'Real-time Analytics Dashboard',
-    techStack: ['React', 'TypeScript', 'WebSocket', 'D3.js'],
-    synopsis: 'Built this to simplify how teams track real-time progress under extreme latency constraints.',
-    challenge: 'Scaling websocket connections to 10k+ users was the toughest part.',
+    id: "1",
+    title: "Air Pollution Dispersion Simulator",
+    techStack: ["HTML", "CSS", "JavaScript", "Canvas"],
+    synopsis:
+      "Interactive Gaussian plume simulation based on Briggs equations to visualize air pollutant dispersion from a point source.",
+    challenge:
+      "Rewriting core dispersion logic and real-time canvas rendering using vanilla JS while maintaining scientific accuracy and usability.",
     stats: {
-      linesOfCode: 15420,
-      features: 23,
-      timeToBuild: '3 months',
-      usersImpacted: 10000,
-      bugsSquashed: 47
+      linesOfCode: 8200,
+      features: 11,
+      timeToBuild: "1 month",
+      usersImpacted: 500,
+      bugsSquashed: 18,
     },
-    previewType: 'terminal',
-    previewContent: 'npm run build && deploying to production... ✅ Dashboard live with 10,247 active connections',
-    liveUrl: 'https://dashboard.example.com',
-    githubUrl: 'https://github.com/alexchen/dashboard',
-    category: 'fullstack',
-    status: 'completed'
+    previewType: "terminal",
+    previewContent:
+      "💨 Rendering plume with Stack Height: 75m, Wind Speed: 5 m/s, Stability Class: B... ✅ Simulation updated in real-time.",
+    liveUrl: "https://titan00001.github.io/Air-pollution-model/",
+    githubUrl: "https://github.com/titan00001/Air-pollution-model",
+    category: "frontend",
+    status: "completed",
   },
   {
-    id: '2',
-    title: 'AI-Powered Code Review Bot',
-    techStack: ['Python', 'OpenAI API', 'GitHub Actions', 'Docker'],
-    synopsis: 'Automated code review process that catches bugs before they reach production.',
-    challenge: 'Training the AI to understand context and provide meaningful feedback.',
+    id: "2",
+    title: "Medicine Inventory Management System",
+    techStack: ["Python", "PyQt5", "SQLite"],
+    synopsis:
+      "A native desktop application built to manage medicine stock and simulate pharmacy operations — created to demonstrate my early understanding of GUI development in Python.",
+    challenge:
+      "Learning event-driven GUI programming using PyQt and applying MVC architecture for managing inventory views and database updates in real time.",
     stats: {
-      linesOfCode: 8930,
-      features: 12,
-      timeToBuild: '6 weeks',
-      bugsSquashed: 23
+      linesOfCode: 4700,
+      features: 7,
+      timeToBuild: "4 weeks",
+      bugsSquashed: 9,
     },
-    previewType: 'terminal',
-    previewContent: 'Analyzing pull request... Found 3 potential issues. Suggesting improvements...',
-    githubUrl: 'https://github.com/alexchen/ai-reviewer',
-    category: 'backend',
-    status: 'completed'
+    previewType: "terminal",
+    previewContent:
+      "📦 Loaded 124 medicines | 💉 Expiry alerts enabled | 🔄 Inventory synced with SQLite DB",
+    githubUrl: "https://github.com/yourusername/med-inventory-pyqt",
+    category: "backend",
+    status: "completed",
   },
   {
-    id: '3',
-    title: 'Motion UI Component Library',
-    techStack: ['React', 'Framer Motion', 'Storybook', 'TypeScript'],
-    synopsis: 'A collection of physics-based animations that make interfaces feel alive.',
-    challenge: 'Balancing performance with smooth animations across all devices.',
+    id: "3",
+    title: "Collaborative Blog Editor",
+    techStack: ["Next.js", "Slate.js", "Yjs", "WebSocket", "CRDT", "Tailwind"],
+    synopsis:
+      "A real-time, rich text editor for blogs with collaborative editing features similar to Google Docs.",
+    challenge:
+      "Integrating CRDT with custom Slate.js nodes and syncing changes across multiple cursors efficiently.",
     stats: {
-      linesOfCode: 12340,
-      features: 35,
-      timeToBuild: '4 months',
-      bugsSquashed: 31
+      linesOfCode: 7400,
+      features: 9,
+      timeToBuild: "ongoing",
+      bugsSquashed: 12,
     },
-    previewType: 'image',
-    previewContent: '',
-    liveUrl: 'https://motion-ui.example.com',
-    githubUrl: 'https://github.com/alexchen/motion-ui',
-    category: 'frontend',
-    status: 'in-progress'
-  }
+    previewType: "terminal",
+    previewContent:
+      "User A joined the session. Syncing edits... 🟢 Collaboration active.",
+    githubUrl: "https://github.com/yourusername/blog-collaborator",
+    category: "fullstack",
+    status: "in-progress",
+  },
+  {
+    id: "4",
+    title: "Config based React Form",
+    techStack: ["React", "TypeScript", "react-hook-form", "Zod"],
+    synopsis:
+      "A dynamic and extensible form library for React that supports configurable input rendering, conditional logic, validation, and custom component injection.",
+    challenge:
+      "Designing a generic form engine with TypeScript support, conditional rendering, custom input extensibility, and integration with react-hook-form + schema validation.",
+    stats: {
+      linesOfCode: 6100,
+      features: 14,
+      timeToBuild: "1 week",
+      bugsSquashed: 5,
+    },
+    previewType: "terminal",
+    previewContent:
+      "🔧 Generating dynamic form with 7 fields | ✅ Validating with Zod schema | 💡 Custom input: <OtpInput /> registered successfully",
+    githubUrl: "https://github.com/mithya-team/react-form-plugin",
+    liveUrl: "https://www.npmjs.com/package/@mithya-team/react-form-plugin",
+    category: "frontend",
+    status: "in-progress",
+  },
 ];
 
 export const workshopContent = {
   title: "Inside the Workshop",
   subtitle: "Where ideas become reality, one commit at a time",
-  filters: ['all', 'frontend', 'backend', 'fullstack'],
-  wipTitle: "What I'm Building Now",
-  wipDescription: "Real-time collaborative code editor with AI-powered suggestions",
+  filters: ["all", "frontend", "backend", "fullstack"],
+  wipTitle: "Collaborative Blog Editor",
+  wipDescription:
+    "A real-time, CRDT-powered blog editor built with Next.js, Slate.js, and Yjs — enabling seamless collaborative writing with support for rich formatting, embeds, and code blocks.",
   wipStatus: [
-    "📝 feat: Add real-time cursor tracking",
-    "🔧 fix: Optimize WebRTC connection handling",
-    "✨ feat: Implement AI code completion",
-    "⚡ Currently working on: Multi-language support"
-  ]
-}; 
+    "🧠 Architected using CRDT (Yjs) and WebSocket for real-time syncing",
+    "💡 Custom Slate.js editor with support for rich text formatting and code blocks",
+    "📦 Image upload implemented (private feature)",
+    "🛠️ Next up: Real-time cursor tracking & collaborative awareness layer",
+  ],
+};

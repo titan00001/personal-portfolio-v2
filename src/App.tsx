@@ -1,4 +1,3 @@
-import React from 'react';
 import { HeroSection } from './components/HeroSection';
 import { IntroSection } from './components/IntroSection';
 import { CraftSection } from './components/CraftSection';

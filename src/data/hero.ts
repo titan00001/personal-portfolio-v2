@@ -1,10 +1,10 @@
 export const heroContent = {
-  mainLine: "// Building things that think and feel.",
+  mainLine: "// Building thoughtful, intelligent tools.",
   code: [
-    "function startPortfolio() {",
-    "const you = getInspired();",
-    "explore(you);",
-    "}"
+    "function launchPortfolio() {",
+    "  const curiosity = ignite();",
+    "  buildWith(curiosity);",
+    "}",
   ],
-  scrollText: "Scroll to explore"
-}; 
+  scrollText: "Scroll to see what I’ve built",
+};
